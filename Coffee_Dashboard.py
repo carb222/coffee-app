@@ -95,8 +95,10 @@ df_drink_counts = (
 with col[2]:
     st.markdown('#### Top Drinks')
 
+    df_combined = df_top_drinks.merge(df_drink_counts, on="coffee_name")
+
     st.dataframe(
-        df_top_drinks,
+        df_combined,
         hide_index=True,
         column_config={
             "coffee_name": st.column_config.TextColumn("Drink"),
@@ -104,21 +106,14 @@ with col[2]:
                 "Total Sales",
                 format="£%d",
                 min_value=0,
-                max_value=df_top_drinks["money"].max(),  # largest sum determines full bar
+                max_value=df_combined["money"].max(),
+            ),
+            "count": st.column_config.ProgressColumn(
+                "Number Sold",
+                format="%d",
+                min_value=0,
+                max_value=df_combined["count"].max(),
             ),
         }
     )
 
-    st.dataframe(
-        df_drink_counts,
-        hide_index=True,
-        column_config={
-            "coffee_name": st.column_config.TextColumn("Drink"),
-            "count": st.column_config.ProgressColumn(
-                "Number Sold",
-                format="%d",  # integer format
-                min_value=0,
-                max_value=df_drink_counts["count"].max(),  # largest count is full bar
-            ),
-        }
-    )
