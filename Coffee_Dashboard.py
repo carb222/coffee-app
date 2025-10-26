@@ -84,25 +84,11 @@ df_top_drinks = (
     .sort_values(by="money", ascending=False)
 )
 
-df_drink_counts = (
-    df_selected_year_month.groupby("coffee_name", as_index=False)["money"]
-    .count()  # counts rows for each drink
-    .rename(columns={"money": "count"})  # rename column to "count"
-    .sort_values(by="count", ascending=False)
-)
-
-
-df_combined = df_top_drinks.merge(df_drink_counts, on="coffee_name")
-
-# Ensure numeric types
-df_combined["money"] = df_combined["money"].astype(float)
-df_combined["count"] = df_combined["count"].astype(int)
-
 with col[2]:
     st.markdown('#### Top Drinks')
 
     st.dataframe(
-        df_combined,
+        df_top_drinks,
         hide_index=True,
         column_config={
             "coffee_name": st.column_config.TextColumn("Drink"),
@@ -110,13 +96,9 @@ with col[2]:
                 "Total Sales",
                 format="£%d",
                 min_value=0,
-                max_value=df_combined["money"].max(),
-            ),
-            "count": st.column_config.ProgressColumn(
-                "Number Sold",
-                format="%d",
-                min_value=0,
-                max_value=df_combined["count"].max(),
+                max_value=df_top_drinks["money"].max(),  # largest sum determines full bar
             ),
         }
     )
+
+
