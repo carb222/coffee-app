@@ -92,10 +92,14 @@ df_drink_counts = (
 )
 
 
+df_combined = df_top_drinks.merge(df_drink_counts, on="coffee_name")
+
+# Ensure numeric types
+df_combined["money"] = df_combined["money"].astype(float)
+df_combined["count"] = df_combined["count"].astype(int)
+
 with col[2]:
     st.markdown('#### Top Drinks')
-
-    df_combined = df_top_drinks.merge(df_drink_counts, on="coffee_name")
 
     st.dataframe(
         df_combined,
@@ -116,4 +120,3 @@ with col[2]:
             ),
         }
     )
-
