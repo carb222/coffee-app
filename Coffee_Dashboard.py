@@ -18,6 +18,7 @@ df_reshaped['datetime'] = pd.to_datetime(df_reshaped['datetime'])
 df_reshaped['year_month'] = df_reshaped['datetime'].dt.to_period('M').astype(str)
 df_reshaped['hour'] = df_reshaped['datetime'].dt.hour
 
+
 #Adding a sidebar
 with st.sidebar:
     st.title('Coffee Shop Sales')
@@ -30,7 +31,6 @@ with st.sidebar:
 
     color_theme_list = ['blues', 'cividis', 'greens', 'inferno', 'magma', 'plasma', 'reds', 'rainbow', 'turbo', 'viridis']
     selected_color_theme = st.selectbox('Select a color theme', color_theme_list)
-
 
 #Heatmap
 
@@ -69,7 +69,7 @@ with col[1]:
 
     st.markdown('#### Total Sales')
 
-    heatmap = make_heatmap(df_reshaped, 'hour', 'coffee_name', 'money', selected_color_theme)
+    heatmap = make_heatmap(df_selected_year_month_sorted, 'hour', 'coffee_name', 'money', selected_color_theme)
     st.altair_chart(heatmap, use_container_width=True)
 
     # Sum money by year_month
@@ -100,5 +100,3 @@ with col[2]:
             ),
         }
     )
-
-
