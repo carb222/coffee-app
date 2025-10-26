@@ -124,9 +124,10 @@ with col[2]:
             "coffee_name": st.column_config.TextColumn("Drink"),
             "count": st.column_config.ProgressColumn(
                 "Number Sold",
-                format="%d",  # integer format
+                format="%d",
                 min_value=0,
-                max_value=df_top_drinks_count["count"].max(),  # largest count determines full bar
+                max_value=int(df_top_drinks_count["count"].max()),
             ),
         }
     )
+
