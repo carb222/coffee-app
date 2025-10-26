@@ -72,5 +72,5 @@ with col[1]:
     heatmap = make_heatmap(df_reshaped, 'hour', 'coffee_name', 'money', selected_color_theme)
     st.altair_chart(heatmap, use_container_width=True)
 
-    line_chart = make_line_chart(df_reshaped,'year_month','money', color='coffee_name', color_scheme=selected_color_theme, title="Total Sales by Coffee Type Over Time")
+    line_chart = make_line_chart(df_reshaped,'year_month','money', color_scheme=selected_color_theme, title="Total Sales by Coffee Type Over Time")
     st.altair_chart(line_chart, use_container_width=True)
