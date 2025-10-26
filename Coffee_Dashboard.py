@@ -46,11 +46,26 @@ def make_heatmap(input_df, input_y, input_x, input_color, input_color_theme):
 
 
 def make_line_chart(df, x, y, color=None, title="Line Chart"):
+    """
+    Creates a line chart using Altair.
+    """
+    # If x is a date-like column, convert it
+    if pd.api.types.is_object_dtype(df[x]) or pd.api.types.is_string_dtype(df[x]):
+        try:
+            df[x] = pd.to_datetime(df[x])
+        except Exception:
+            pass  # keep original if conversion fails
+
     chart = alt.Chart(df).mark_line(point=True).encode(
         x=alt.X(x, title=x),
         y=alt.Y(y, title=y),
         tooltip=[x, y] + ([color] if color else [])
     )
+
+    # Add color encoding if specified
+    if color:
+        chart = chart.encode(color=color)
+
     # Styling
     chart = chart.properties(
         title=title,
@@ -71,5 +86,5 @@ with col[1]:
     heatmap = make_heatmap(df_reshaped, 'hour', 'coffee_name', 'money', selected_color_theme)
     st.altair_chart(heatmap, use_container_width=True)
 
-    line_chart = make_line_chart(df_reshaped, 'date', 'money', selected_color_theme)
+    line_chart = make_line_chart(df_reshaped, 'year_month', 'money', selected_color_theme)
     st.altair_chart(line_chart, use_container_width=True)
