@@ -77,21 +77,28 @@ with col[1]:
     line_chart = make_line_chart(df_grouped, 'year_month', 'money', title="Total Sales Over Time")
     st.altair_chart(line_chart, use_container_width=True)
 
+
+df_top_drinks = (
+    df_selected_year_month.groupby("coffee_name", as_index=False)["money"]
+    .sum()
+    .sort_values(by="money", ascending=False)
+)
+
+
 with col[2]:
     st.markdown('#### Top Drinks')
 
     st.dataframe(
-        df_selected_year_month_sorted[["coffee_name", "money"]],
+        df_top_drinks,
         hide_index=True,
         column_config={
-            "coffee_name": st.column_config.TextColumn(
-                "Drink",
-            ),
+            "coffee_name": st.column_config.TextColumn("Drink"),
             "money": st.column_config.ProgressColumn(
-                "Sales",
+                "Total Sales",
                 format="%f",
                 min_value=0,
-                max_value=df_selected_year_month_sorted["money"].max(),
+                max_value=df_top_drinks["money"].max(),  # largest sum determines full bar
             ),
         }
     )
+
