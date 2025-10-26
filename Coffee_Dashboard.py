@@ -92,6 +92,6 @@ with col[2]:
                         "Sales",
                         format="%f",
                         min_value=0,
-                        max_value=max(df_selected_year_month_sorted.population),
+                        max_value=max(df_selected_year_month_sorted.money),
                      )}
                  )
