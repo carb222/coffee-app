@@ -24,13 +24,22 @@ with st.sidebar:
     st.title('Coffee Shop Sales')
     
     year_month_list = list(df_reshaped.year_month.unique())[::-1]
+    year_month_list.insert(0, "All")  # Add "All" at the beginning
 
-    selected_year = st.selectbox('Select a Date', year_month_list, index=len(year_month_list)-1)
-    df_selected_year_month = df_reshaped[df_reshaped.year_month == selected_year]
+
+    selected_year = st.selectbox('Select a Date', year_month_list, index=1)
+
+    if selected_year == "All":
+        df_selected_year_month = df_reshaped.copy()  # Use full dataset
+    else:
+        df_selected_year_month = df_reshaped[df_reshaped.year_month == selected_year]
+
     df_selected_year_month_sorted = df_selected_year_month.sort_values(by="money", ascending=False)
+
 
     color_theme_list = ['blues', 'cividis', 'greens', 'inferno', 'magma', 'plasma', 'reds', 'rainbow', 'turbo', 'viridis']
     selected_color_theme = st.selectbox('Select a color theme', color_theme_list)
+
 
 #Heatmap
 
