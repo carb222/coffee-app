@@ -80,18 +80,18 @@ with col[1]:
 with col[2]:
     st.markdown('#### Top Drinks')
 
-    st.dataframe(df_selected_year_month_sorted,
-                 column_order=("coffee_name", "money"),
-                 hide_index=True,
-                 width=None,
-                 column_config={
-                    "coffee_name": st.column_config.TextColumn(
-                        "Drink",
-                    ),
-                    "money": st.column_config.ProgressColumn(
-                        "Sales",
-                        format="%f",
-                        min_value=0,
-                        max_value=max(df_selected_year_month_sorted.money),
-                     )}
-                 )
+    st.dataframe(
+        df_selected_year_month_sorted[["coffee_name", "money"]],
+        hide_index=True,
+        column_config={
+            "coffee_name": st.column_config.TextColumn(
+                "Drink",
+            ),
+            "money": st.column_config.ProgressColumn(
+                "Sales",
+                format="%f",
+                min_value=0,
+                max_value=df_selected_year_month_sorted["money"].max(),
+            ),
+        }
+    )
