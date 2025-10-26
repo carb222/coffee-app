@@ -13,7 +13,7 @@ st.set_page_config(
 alt.themes.enable("dark")
 
 #Load Data
-df_reshaped = pd.read_csv('Coffee_Sales_Kaggle/index_1.csv')
+df_reshaped = pd.read_csv('index_1.csv')
 df_reshaped['datetime'] = pd.to_datetime(df_reshaped['datetime'])
 df_reshaped['year_month'] = df_reshaped['datetime'].dt.to_period('M').astype(str)
 df_reshaped['hour'] = df_reshaped['datetime'].dt.hour
