@@ -95,7 +95,7 @@ with col[2]:
             "coffee_name": st.column_config.TextColumn("Drink"),
             "money": st.column_config.ProgressColumn(
                 "Total Sales",
-                format="%f",
+                format="%d",
                 min_value=0,
                 max_value=df_top_drinks["money"].max(),  # largest sum determines full bar
             ),
