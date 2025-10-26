@@ -76,3 +76,22 @@ with col[1]:
     df_grouped = df_reshaped.groupby('year_month', as_index=False)['money'].sum()
     line_chart = make_line_chart(df_grouped, 'year_month', 'money', title="Total Sales Over Time")
     st.altair_chart(line_chart, use_container_width=True)
+
+with col[2]:
+    st.markdown('#### Top Drinks')
+
+    st.dataframe(df_selected_year_month_sorted,
+                 column_order=("coffee_name", "money"),
+                 hide_index=True,
+                 width=None,
+                 column_config={
+                    "coffee_name": st.column_config.TextColumn(
+                        "Drink",
+                    ),
+                    "money": st.column_config.ProgressColumn(
+                        "Sales",
+                        format="%f",
+                        min_value=0,
+                        max_value=max(df_selected_year_month_sorted.population),
+                     )}
+                 )
